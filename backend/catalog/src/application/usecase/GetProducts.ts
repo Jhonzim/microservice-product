@@ -9,8 +9,8 @@ export default class GetProducts {
 		this.productRepository = repositoryFactory.createProductRepository();
 	}
 
-	async execute (): Promise<any> {
-		const products = await this.productRepository.list();
+	async execute (page: number = 1, limit: number = 10): Promise<any> {
+		const { products, pagination } = await this.productRepository.list(page, limit);
 		const output: Output[] = [];
 		for (const product of products) {
 			output.push({
@@ -19,7 +19,10 @@ export default class GetProducts {
 				price: product.price
 			});
 		}
-		return this.presenter.present(output);
+		return {
+			data: this.presenter.present(output),
+			pagination
+		};
 	}
 }
 

@@ -6,10 +6,11 @@ import DatabaseConnection from "../database/DatabaseConnection"
 export default class ProductRepositorySqlite implements ProductRepository {
     constructor(readonly connection: DatabaseConnection) {}
 
-    async list(): Promise<Product[]> {
+    async list(page: number, limit: number): Promise<{ products: Product[], pagination: any }> {
+        const offset = (page - 1) * limit;
         const productsData = await this.connection.query(
-            "select * from product",
-            []
+            "select * from product limit ? offset ?",
+            [limit, offset]
         )
         const products: Product[] = []
         for (const productData of productsData) {
@@ -25,7 +26,22 @@ export default class ProductRepositorySqlite implements ProductRepository {
                 )
             )
         }
-        return products
+        
+        const [countData] = await this.connection.query("select count(*) as total from product", []);
+        const totalItems = countData.total;
+        const totalPages = Math.ceil(totalItems / limit);
+
+        return {
+            products,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems,
+                itemsPerPage: limit,
+                hasNextPage: page < totalPages,
+                hasPreviousPage: page > 1
+            }
+        };
     }
 
     async get(idProduct: number): Promise<Product> {
