@@ -135,12 +135,12 @@ Você irá analisar uma aplicação full-stack (frontend + backend) disponível 
 4. Manter a experiência do usuário fluida
 
 #### **Entrega Esperada:**
-- [ ] Fork do repositório original
-- [ ] Branch com nome `feature/paginacao`
-- [ ] Código implementado e funcionando
-- [ ] Testes passando (incluindo novos testes)
-- [ ] README atualizado com a nova funcionalidade
-- [ ] Pull Request com descrição detalhada das mudanças
+- [x] Fork do repositório original
+- [x] Branch com nome `feature/paginacao`
+- [x] Código implementado e funcionando
+- [x] Testes passando (incluindo novos testes)
+- [x] README atualizado com a nova funcionalidade
+- [x] Pull Request com descrição detalhada das mudanças
 
 ---
 
