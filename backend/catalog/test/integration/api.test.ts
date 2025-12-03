@@ -19,7 +19,7 @@ beforeAll(async () => {
     const usecaseFactory = new UsecaseFactory(repositoryFactory)
     server = new ExpressAdapter()
     new HttpController(server, usecaseFactory)
-    server.listen(3001)
+    server.listen(3002)
 })
 
 afterAll(async () => {
@@ -27,26 +27,28 @@ afterAll(async () => {
 })
 
 test("Deve listar os produtos em json (SQLite)", async function () {
-    const response = await axios.get("http://localhost:3001/products", {
+    const response = await axios.get("http://localhost:3002/products", {
         headers: { "content-type": "application/json" },
     })
     const output = response.data
-    expect(output).toHaveLength(100)
-    expect(output[0].idProduct).toBe(1)
-    expect(output[0].price).toBe(10)
+    expect(output.data).toHaveLength(10)
+    expect(output.data[0].idProduct).toBe(1)
+    expect(output.data[0].price).toBe(10)
+    expect(output.pagination.currentPage).toBe(1)
 })
 
 test("Deve listar os produtos em csv (SQLite)", async function () {
-    const response = await axios.get("http://localhost:3001/products", {
+    const response = await axios.get("http://localhost:3002/products", {
         headers: { "content-type": "text/csv" },
     })
-    const output: string = response.data
-    const firstLine = output.split("\n")[0]
+    const output = response.data
+    const csvData = output.data
+    const firstLine = csvData.split("\n")[0]
     expect(firstLine).toBe("1;Product 1;10")
 })
 
 test("Deve retornar um produto (SQLite)", async function () {
-    const response = await axios.get("http://localhost:3001/products/1")
+    const response = await axios.get("http://localhost:3002/products/1")
     const output = response.data
     expect(output.idProduct).toBe(1)
     expect(output.description).toBe("Product 1")
