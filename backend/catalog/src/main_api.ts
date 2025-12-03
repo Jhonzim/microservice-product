@@ -37,4 +37,5 @@ import swaggerUi from "swagger-ui-express"
         )
     }
     httpServer.listen(3001)
+    console.log("Server running on port 3001")
 })()
