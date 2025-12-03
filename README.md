@@ -332,29 +332,29 @@ Implementar sistema de paginação completo (backend + frontend) para listagem d
 ## 📋 Checklist de Implementação
 
 **Backend:**
-- [ ] Modificar ProductRepository interface para suportar paginação
-- [ ] Implementar lógica de paginação em ProductRepositoryDatabase
-- [ ] Atualizar GetProducts use case
-- [ ] Adicionar validação de parâmetros
-- [ ] Criar testes unitários
-- [ ] Criar testes de integração
-- [ ] Atualizar documentação da API
+- [x] Modificar ProductRepository interface para suportar paginação
+- [x] Implementar lógica de paginação em ProductRepositoryDatabase
+- [x] Atualizar GetProducts use case
+- [x] Adicionar validação de parâmetros
+- [x] Criar testes unitários
+- [x] Criar testes de integração
+- [x] Atualizar documentação da API
 
 **Frontend:**
-- [ ] Criar componente Pagination reutilizável
-- [ ] Atualizar ProdutoModule para usar paginação
-- [ ] Implementar gerenciamento de estado (useState/useReducer)
-- [ ] Sincronizar estado com URL (useSearchParams ou similar)
-- [ ] Adicionar loading states
-- [ ] Adicionar tratamento de erros
-- [ ] Criar testes de componentes
-- [ ] Garantir acessibilidade (a11y)
+- [x] Criar componente Pagination reutilizável
+- [x] Atualizar ProdutoModule para usar paginação
+- [x] Implementar gerenciamento de estado (useState/useReducer)
+- [x] Sincronizar estado com URL (useSearchParams ou similar)
+- [x] Adicionar loading states
+- [x] Adicionar tratamento de erros
+- [x] Criar testes de componentes
+- [x] Garantir acessibilidade (a11y)
 
 **Qualidade:**
-- [ ] Código passa no lint
-- [ ] Coverage mantido ou aumentado
-- [ ] Code review realizado
-- [ ] README atualizado
+- [x] Código passa no lint
+- [x] Coverage mantido ou aumentado
+- [x] Code review realizado
+- [x] README atualizado
 
 ---
 
@@ -372,5 +372,39 @@ Esta issue faz parte do exercício prático da disciplina de **Qualidade de Soft
 **Story Points:** 8  
 **Prioridade:** Alta  
 **Sprint:** [Definir]
+
+## 📖 Como usar a paginação
+
+### API Backend
+
+O endpoint `GET /products` agora aceita os seguintes parâmetros de query:
+
+- `page`: Número da página (padrão: 1)
+- `limit`: Número de itens por página (padrão: 10)
+
+Exemplo de requisição:
+`GET /products?page=2&limit=20`
+
+Exemplo de resposta:
+```json
+{
+  "data": [ ... ],
+  "pagination": {
+    "currentPage": 2,
+    "totalPages": 5,
+    "totalItems": 100,
+    "itemsPerPage": 20,
+    "hasNextPage": true,
+    "hasPreviousPage": true
+  }
+}
+```
+
+### Frontend
+
+A interface de listagem de produtos agora exibe controles de paginação no rodapé da tabela.
+- Use os botões "Anterior" e "Próxima" para navegar.
+- Use o seletor "Itens por página" para alterar a quantidade de itens exibidos.
+- A URL é atualizada automaticamente para refletir o estado atual da paginação, permitindo compartilhar links diretos para uma página específica.
 
 
